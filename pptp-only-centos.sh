@@ -2,6 +2,9 @@
 
 # pptpd vpn only
 # run in CentOS6.x
+#
+# uyinn/vpn_setup/pptp-only-centos.sh
+#
 # @author: uyinn.tang
 # @mailto: uyinn@live.com
 
