@@ -73,4 +73,4 @@ echo -e '\E[37;44m'"\033[1m Username: $VPN_USER\033[0m"
 echo -e '\E[37;44m'"\033[1m Password: $VPN_PASS\033[0m"
 
 
-) 2> &1 |tee /tmp/ppt-vpn-install.log
+) 2>&1 |tee /tmp/ppt-vpn-install.log
