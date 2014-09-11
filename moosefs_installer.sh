@@ -59,7 +59,10 @@ function fuse_install()
 function mfs_install()
 {
 	# create working user if doesn't exist
-	/usr/bin/id mfs > /dev/null 2>&1  ||  /usr/sbin/useradd mfs
+	/usr/bin/id -g $WORKING_GROUP > /dev/null 2>&1 || /usr/sbin/groupadd $WORKING_GROUP
+	/usr/bin/id $WORKING_USER > /dev/null 2>&1 \
+		&& /usr/sbin/usermod -a -G $WORKING_GROUP $WORKING_USER \
+		||  /usr/sbin/useradd -g $WORKING_GROUP $WORKING_USER
 
 	cd $SRCDIR
 	wget -c http://you.uyinn.com/src/mfs-1.6.27-5.tar.gz
