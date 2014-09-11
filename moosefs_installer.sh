@@ -7,37 +7,72 @@
 
 # mfsmount compile
 # configure: error: mfsmount build was forced, but fuse library is too old or not installed
-# 解决方法 http://bbs.chinaunix.net/thread-1643863-1-1.html
+# solution: http://bbs.chinaunix.net/thread-1643863-1-1.html
 #export  PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH
 
-#
-# note:
-# 当mfsmaster非正常关闭后，changelogs没有存进metadata.mfs。
-# 此时直接启动mfsmaster会报错，
-#
-# 解决方法： mfsmetarestore -a 
-# 合并之后logs之后，即可正常启动
-
+# Script Privilege
 [ $UID -ne 0 ] && echo "run as ROOT" && exit 9
+# Network Enable Check
 /bin/ping -c 1 122.225.217.192 > /dev/null 2>&1
 [ $? -ne 0 ] && echo "Network doesn't work" && exit 10
 
+# software package store path 
+SRCDIR=/opt/src
+
+# setup MooseFS prefix and working user
+MOOSEFS_PATH=/usr/local/mfs
+WORKING_USER=mfs
+WORKING_GROUP=mfs
+
+# Install or not following components
+# enable / disable
+MFSMASTER=disable
+MFSCHUNKSERVER=disable
+MFSMOUNT=enable
+
+CONFIGURE="./configure 
+--prefix=${MOOSEFS_PATH}  
+--with-default-user=$WORKING_USER 
+--with-default-group=$WORKING_GROUP 
+--${MFSMASTER}-mfsmaster 
+--${MFSCHUNKSERVER}-mfschunkserver 
+--${MFSMOUNT}-mfsmount 
+"
+
+# Install FUSE for mfsmount
+function fuse_install()
+{
+	FUSE_SIGN=$(echo $CONFIGURE |grep 'enable-mfsmount' |wc -l)
+	
+	if [ $FUSE_SIGN -eq 1 ]
+	then
+		cd $SRCDIR
+		wget -c http://you.uyinn.com/src/fuse-2.9.3.tar.gz
+		tar zxf fuse-2.9.3.tar.gz && cd fuse-2.9.3
+		./configure && make && make install
+		export  PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH
+		cd ..
+	fi
+}
+
+# Install MooseFS
+function mfs_install()
+{
+	# create working user if doesn't exist
+	/usr/bin/id mfs > /dev/null 2>&1  ||  /usr/sbin/useradd mfs
+
+	cd $SRCDIR
+	wget -c http://you.uyinn.com/src/mfs-1.6.27-5.tar.gz
+	tar zxf mfs-1.6.27-5.tar.gz && cd mfs-1.6.27
+	$CONFIGURE
+	make && make install
+	cd ..
+}
+
+# Installing
+# Installed Dependences
 yum -y install zlib-devel make gcc gcc-c++ wget dos2unix
-mkdir -p /opt/src && cd /opt/src
+mkdir -p $SRCDIR && cd $SRCDIR
 
-# install mfsmount dependence: fuse
-wget -c http://you.uyinn.com/src/fuse-2.9.3.tar.gz
-tar zxf fuse-2.9.3.tar.gz && cd fuse-2.9.3
-./configure && make && make install && echo "fuse install done"
-export  PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH
-cd ..
-
-# install all moosefs components
-/usr/bin/id mfs > /dev/null 2>&1  ||  /usr/sbin/useradd mfs
-wget -c http://you.uyinn.com/src/mfs-1.6.27-5.tar.gz
-tar zxf mfs-1.6.27-5.tar.gz && cd mfs-1.6.27
-./configure --prefix=/usr/local/mfs --with-default-user=mfs --with-default-group=mfs && echo "configure mfs done by tang"
-make && make install && echo "install moosefs components done by tang"
-echo "export PATH=$PATH:/usr/local/mfs/bin:/usr/local/mfs/sbin" >> /etc/profile && . /etc/profile
-cd ..
-
+fuse_install $CONFIGURE
+mfs_install $CONFIGURE
