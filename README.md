@@ -6,3 +6,9 @@ nfs_install_centso5or6
 pptp-only-centos.sh
 =========
 基于CentOS 5或6 的PPTP安装脚本
+
+
+openswan_install.sh
+=========
+openswan 组网脚本。
+只需要在脚本中填写两组服务器的网络信息即可
