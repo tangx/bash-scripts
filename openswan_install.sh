@@ -23,7 +23,7 @@ REGION_2_INTERNAL_LAN='10.2.0.0/16'
 REGION_CONNECTION_PASSWORD="conneting_pasword"
 
 case $1 in 
-left|LEFT)  {
+$REGION_1)  {
 	LEFT_REGION=$REGION_1
 	LEFT_INTERNAL_IP=${REGION_1_INTERNAL_IP}
 	LEFT_INTERNET_IP=${REGION_1_INTERNET_IP}
@@ -34,7 +34,7 @@ left|LEFT)  {
 	RIGHT_INTERNET_IP=${REGION_2_INTERNET_IP}
 	RIGHT_INTERNAL_LAN=${REGION_2_INTERNAL_LAN}
 	} ;;
-right|RIGHT) {
+$REGION_2) {
 	LEFT_REGION=$REGION_2
 	LEFT_INTERNAL_IP=${REGION_2_INTERNAL_IP}
 	LEFT_INTERNET_IP=${REGION_2_INTERNET_IP}
@@ -46,7 +46,8 @@ right|RIGHT) {
 	RIGHT_INTERNAL_LAN=${REGION_1_INTERNAL_LAN}
 	} ;;
 *)
-	echo "$0 [ left | right ]" 
+	echo "To run openswan-install-script with your current region:"
+	echo "$0 [ $REGION_1 | $REGION_2 ]" 
 	exit 9
 	;;
 esac
@@ -98,3 +99,7 @@ sed -i "s@virtual_private=.*@&,%v4:${LEFT_INTERNAL_LAN},%v4:${RIGHT_INTERNAL_LAN
 
 # sed -i "/$LEFT_INTERNET_IP $RIGHT_INTERNET_IP/d"  /etc/ipsec.secrets
 echo  "$LEFT_INTERNET_IP $RIGHT_INTERNET_IP: PSK \"${REGION_CONNECTION_PASSWORD}\"" > /etc/ipsec.d/${LEFT_REGION}_${RIGHT_REGION}.secrets
+
+
+/etc/init.d/ipsec reload
+
