@@ -4,7 +4,7 @@ yum -y install bash perl tree
 yum -y install wget nc nmap lrzsz
 yum -y install unzip  dos2unix
 yum -y install lsof iftop iotop 
-yum -y install ntpdate ntpd
+yum -y install ntpdate ntp
 yum -y install openssl-devel openssh-devel
 yum -y install nfs-utils rpcbind
 
