@@ -7,6 +7,7 @@
 
 
 NGINX_PREFIX=$NGINX_PREFIX
+[ -Z $NGINX_PREFIX ]  && { echo "Must need to Specify --> NGINX_PREFIX <-- directory " ; exit 1; } 
 NGINX=$NGINX_PREFIX/sbin/nginx
 NGINX_CONF=$NGINX_PREFIX/conf/nginx.conf
 NGINX_PID=$NGINX_PREFIX/logs/nginx.pid 
