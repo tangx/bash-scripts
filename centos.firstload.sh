@@ -24,6 +24,17 @@ yum -y install nfs-utils rpcbind
 \cp -a /usr/share/zoneinfo/Asia/Hong_Kong /etc/localtime 
 
 chkconfig ntpd off
+chkconfig iptables off
+chkconfig ip6tables off
+sed --follow-symlinks -i '/SELINUX/s/enforcing/disabled/' /etc/sysconfig/selinux
 
 
+cat >> /etc/profile <<'EOF'
+HISTTIMEFORMAT="[ %Y-%m-%d %H:%M:%S ] " 
+PS1="\[\033[1;36m\][\[\033[0m\]$(date +%F)_\t \[\033[1;36m\]\u\[\033[0m\]@\[\033[1;32m\]\h\[\033[0m\]:\[\033[1;31m\]\W\[\033[0m\]\[\033[1;36m\]]\[\033[33;1m\]\\$ \[\033[0m\]" 
+
+alias grep='grep --color=auto '
+
+# ulimit -SHn 65535
+EOF
 
