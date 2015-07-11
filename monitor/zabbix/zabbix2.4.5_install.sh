@@ -46,7 +46,7 @@ sed -i "s#post_max_size = 8M#post_max_size = 32M#g" /etc/php.ini
 sed -i "s#max_input_time = 60#max_input_time = 300#g" /etc/php.ini
 sed -i "s#memory_limit = 128M#memory_limit = 128M#g" /etc/php.ini
 # sed -i "/;mbstring.func_overload = 0/mbstring.func_overload = 2\n" /etc/php.ini
-sed -i "/mbstring.func_overload = 0/;mbstring.func_overload = 2\n" /etc/php.ini
+sed -i "/mbstring.func_overload = 0/;mbstring.func_overload = 2/" /etc/php.ini
 chkconfig httpd on
 /etc/init.d/httpd restart
 
