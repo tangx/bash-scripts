@@ -7,6 +7,7 @@
 # @@@@@@@@@@@@@@@@@@@@@
 # 
 # 更新记录
+# 2015-07-30
 #   - 模块化 /etc/init.d/nginxd , 注释新建nginxd段代码, 通过下载获取
 
 # @@@@@@@@@@@@@@@@@@@@@
@@ -115,8 +116,10 @@
 
 # 下载 /etc/init.d/nginxd 脚本
 
-wget -c https://raw.githubusercontent.com/uyinn/bash-scripts/master/nginx/nginxd -o /etc/init.d/nginxd
+wget https://raw.githubusercontent.com/uyinn/bash-scripts/master/nginx/nginxd -O /etc/init.d/nginxd
 sed -i "s@NGINX_PREFIX=\$NGINX_PREFIX@NGINX_PREFIX=$NGINX_PREFIX@" /etc/init.d/nginxd
 chmod +x /etc/init.d/nginxd
+
+chkconfig nginxd on
 
 
