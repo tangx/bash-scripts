@@ -1,10 +1,24 @@
 #!/bin/bash
 #
-# # nginx controller script
-#
-# # need to specify $NGINX_PREFIX
 # 
+# nginx - this script starts and stops the nginx daemon 
+# 
+# chkconfig:   - 85 15 
+# description:  Nginx is an HTTP(S) server, HTTP(S) reverse \ 
+#               proxy and IMAP/POP3 proxy server 
+# processname: nginx 
 
+# @@@@@@@@@@@@@
+# 更新记录
+
+# 2015-07-30
+  # + chkconfig 选项
+  # + 导入 functions  
+
+# @@@@@@@@@@@@@
+#
+# Source function library
+[ -f /etc/init.d/functions ] && source /etc/init.d/functions
 
 NGINX_PREFIX=$NGINX_PREFIX
 [ -Z $NGINX_PREFIX ]  && { echo "Must need to Specify --> NGINX_PREFIX <-- directory " ; exit 1; } 
