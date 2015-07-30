@@ -1,0 +1,42 @@
+#!/bin/bash
+
+yum -y install bash perl tree 
+yum -y install wget nc nmap lrzsz
+yum -y install unzip  dos2unix
+yum -y install lsof iftop iotop 
+yum -y install ntpdate ntp
+yum -y install openssl-devel openssh-devel
+yum -y install nfs-utils rpcbind
+
+# yum -y update
+
+
+
+# https://pip.pypa.io/en/stable/installing.html
+ 
+# yum -y install python
+# wget -c https://raw.github.com/pypa/pip/master/contrib/get-pip.py
+# wget -c https://bootstrap.pypa.io/get-pip.py
+# python get-pip.py 
+# pip install awscli
+
+
+\cp -a /usr/share/zoneinfo/Asia/Hong_Kong /etc/localtime 
+
+chkconfig ntpd off
+
+cat >> /etc/profile <<'EOF'
+HISTTIMEFORMAT="[ %Y-%m-%d %H:%M:%S ] " 
+PS1="\[\033[1;36m\][\[\033[0m\]$(date +%F)_\t \[\033[1;36m\]\u\[\033[0m\]@\[\033[1;32m\]\h\[\033[0m\]:\[\033[1;31m\]\w\[\033[0m\]\[\033[1;36m\]]\[\033[33;1m\]\\$ \[\033[0m\]" 
+
+alias grep='grep --color=auto '
+
+export JAVA_HOME=/mnt/app/jdk1.7.0_71
+export CLASSPATH=.:/jre/lib/rt.jar:/lib/dt.jar:/lib/tools.jar
+# export JAVA_OPTS="-server -Xms256m -Xmx1024m -XX:PermSize=256m -XX:MaxPermSize=512m -XX:MaxNewSize=256m"
+# export JAVA_OPTS="$JAVA_OPTS -server -Xms512M -Xmx1024M -Xmn256M -XX:PermSize=64M -XX:MaxPermSize=160M -XX:SurvivorRatio=8 -XX:MaxTenuringThreshold=5 -XX:GCTimeRatio=19 -XX:+DisableExplicitGC -XX:+UseParNewGC    -XX:+UseConcMarkSweepGC  -XX:+UseCMSCompactAtFullCollection -XX:CMSFullGCsBeforeCompaction=0  -XX:+CMSParallelRemarkEnabled -XX:CMSInitiatingOccupancyFraction=70 -XX:SoftRefLRUPolicyMSPerMB=0"
+export PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin:/bin:/bin:/bin
+
+ulimit -SHn 65535
+EOF
+
