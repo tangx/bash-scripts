@@ -2,7 +2,8 @@
 #
 # author: uyinn@live.com
 #
-
+# download_url: https://raw.githubusercontent.com/uyinn/bash-scripts/master/nginx/nginx.base.install.sh
+# 
 # 参数设置
   NGINX_PREFIX=/usr/local/nginx
   NGINX_USER=www
