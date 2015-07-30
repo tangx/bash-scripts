@@ -1,10 +1,10 @@
 #!/bin/bash
 #
-# # author: uyinn@live.com
-# 
 # # nginx controller script
+#
 # # need to specify $NGINX_PREFIX
-# # download_url: https://raw.githubusercontent.com/uyinn/bash-scripts/master/nginx/nginxd
+# 
+
 
 NGINX_PREFIX=$NGINX_PREFIX
 [ -Z $NGINX_PREFIX ]  && { echo "Must need to Specify --> NGINX_PREFIX <-- directory " ; exit 1; } 
@@ -20,21 +20,13 @@ function status()
   then
   {
     NGINX_PID_NUMBER=$(cat $NGINX_PID )
-    echo "Nginx is Running [ $NGINX_PID_NUMBER ] ! "
+    echo "Nginx is Running at [ $NGINX_PID_NUMBER ] ! "
   }
   else 
   {
     echo "Nginx is stoped!"
   }
   fi
-  
-  # 判断nginx进程是否存在
-  # ps -ef |grep "nginx: master process" | egrep -v "grep|$0"
-  
-  # 思路：
-  # 首先判断文件 nginx.pid 是否存在
-  #   + 不存在, 判断 nginx 进程是否存在
-  #     + 存在
 }
 
 function start()

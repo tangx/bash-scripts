@@ -43,71 +43,68 @@
     --with-pcre=../pcre-8.33/  \
     && make && make install && echo "nginx done by uyinn"
     
-# cat > /etc/init.d/nginxd <<'EOF'
-# #!/bin/bash
+cat > /etc/init.d/nginxd <<'EOF'
+#!/bin/bash
+#
+# #nginx controller script
+#
+#
+NGINX_PREFIX=$NGINX_PREFIX
+NGINX=$NGINX_PREFIX/sbin/nginx
+NGINX_CONF=$NGINX_PREFIX/conf/nginx.conf
+NGINX_PID=$NGINX_PREFIX/logs/nginx.pid 
 
-# nginx controller script
+NGINX_ACTION=$1
 
+function start()
+{
+  $NGINX -c $NGINX_CONF
+}
 
-# NGINX_PREFIX=$NGINX_PREFIX
-# NGINX=$NGINX_PREFIX/sbin/nginx
-# NGINX_CONF=$NGINX_PREFIX/conf/nginx.conf
-# NGINX_PID=$NGINX_PREFIX/logs/nginx.pid 
+function stop()
+{
+  $NGINX -s stop
+  [ $0 -eq 0 ] && { [ ! -f $NGINX_PID ] && echo "Nginx is stoped! " ; }
+}
 
-# NGINX_ACTION=$1
+function status()
+{
+  if [ -f  $NGINX_PID ] 
+  then
+  {
+    NGINX_PID_NUMBER=$(cat $NGINX_PID )
+    echo "Nginx is Running at [ $NGINX_PID_NUMBER ] ! "
+  }
+  else 
+  {
+    echo "Nginx is stoped!"
+  }
+  fi
+}
 
-# function start()
-# {
-  # $NGINX -c $NGINX_CONF
-# }
+function test()
+{
+  $NGINX -t $NGINX_CONF
+}
 
-# function stop()
-# {
-  # $NGINX -s stop
-  # [ $0 -eq 0 ] && { [ ! -f $NGINX_PID ] && echo "Nginx is stoped! " ; }
-# }
-
-# function status()
-# {
-  # if [ -f  $NGINX_PID ] 
-  # then
-  # {
-    # NGINX_PID_NUMBER=$(cat $NGINX_PID )
-    # echo "Nginx is Running at [ $NGINX_PID_NUMBER ] ! "
-  # }
-  # else 
-  # {
-    # echo "Nginx is stoped!"
-  # }
-  # fi
-# }
-
-# function test()
-# {
-  # $NGINX -t $NGINX_CONF
-# }
-
-# function version()
-# {
-  # $NGINX -v
-  # ecoh ' '
-  # $NGINX -V
-# }
-
-
-# case $NGINX_ACTION in 
-# start|stop|test|status|version)
-  # $NGINX_ACTION ;;
-# restart)
-  # stop && start ;;
-# *)
-  # echo "Usage: $0 [ start|stop|restart|test|status|version ]"
-  # ;;
-# esac
-# EOF
+function version()
+{
+  $NGINX -v
+  ecoh ' '
+  $NGINX -V
+}
 
 
-wget -c https://raw.githubusercontent.com/uyinn/bash-scripts/master/nginx/nginxd -o /etc/init.d/nginxd
+case $NGINX_ACTION in 
+start|stop|test|status|version)
+  $NGINX_ACTION ;;
+restart)
+  stop && start ;;
+*)
+  echo "Usage: $0 [ start|stop|restart|test|status|version ]"
+  ;;
+esac
+EOF
+
 sed -i "s@NGINX_PREFIX=\$NGINX_PREFIX@NGINX_PREFIX=$NGINX_PREFIX@" /etc/init.d/nginxd
 chmod +x /etc/init.d/nginxd
-
