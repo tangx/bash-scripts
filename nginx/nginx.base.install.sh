@@ -106,5 +106,5 @@ restart)
 esac
 EOF
 
-sed -i "s/NGINX_PREFIX=\$NGINX_PREFIX/NGINX_PREFIX=$NGINX_PREFIX/" /etc/init.d/nginxd
+sed -i "s@NGINX_PREFIX=\$NGINX_PREFIX@NGINX_PREFIX=$NGINX_PREFIX@" /etc/init.d/nginxd
 chmod +x /etc/init.d/nginxd
