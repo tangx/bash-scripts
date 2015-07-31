@@ -51,7 +51,7 @@ fi
 EOF
 chmod +x /usr/bin/php-fastcgi
 
-cat > /etc/init.d/php-fastcgi <<EOF
+cat > /etc/init.d/php-fastcgi <<'EOF'
 #!/bin/sh
 
 # php-fastcgi - Use php-fastcgi to run php applications
@@ -111,8 +111,8 @@ case "$1" in
         echo "Usage: $N {start|stop|restart}" >&2
         exit 1
         ;;
-    esac
-    exit 0
+esac
+exit 0
 EOF
 chmod +x /etc/init.d/php-fastcgi
 service php-fastcgi start
