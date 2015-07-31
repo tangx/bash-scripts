@@ -1,3 +1,6 @@
+#!/bin/bash
+#
+
 yum -y install wget lrzsz dos2unix gcc gcc-g++ make 
 
 # rpm -Uvh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
@@ -5,22 +8,22 @@ yum -y install wget lrzsz dos2unix gcc gcc-g++ make
 # yum install nginx sudo
 
 # 安装pcre
-wget -c http://you.uyinn.com/src/nginx/pcre-8.33.tar.bz2
-tar jxf pcre-8.33.tar.bz2 && cd  pcre-8.33
-./configure && make && make install &&  echo "prec done by tang"
+# wget -c http://you.uyinn.com/src/nginx/pcre-8.33.tar.bz2
+# tar jxf pcre-8.33.tar.bz2 && cd  pcre-8.33
+# ./configure && make && make install &&  echo "prec done by tang"
 
-echo "/usr/local/lib/" >> /etc/ld.so.conf
-echo "/usr/local/lib64/" >> /etc/ld.so.conf
-ldconfig
+# echo "/usr/local/lib/" >> /etc/ld.so.conf
+# echo "/usr/local/lib64/" >> /etc/ld.so.conf
+# ldconfig
 
 # 安装nginx
-id www > /dev/null 2>&1 || useradd -s /sbin/nologin www
-yum -y install wget zlib-devel openssl-devel gcc gcc-g++ make 
+# id www > /dev/null 2>&1 || useradd -s /sbin/nologin www
+# yum -y install wget zlib-devel openssl-devel gcc gcc-g++ make 
 
-wget -c http://nginx.org/download/nginx-1.7.8.tar.gz
-tar zxf nginx-1.7.8.tar.gz && cd nginx-1.7.8
-./configure --user=www --group=www --prefix=/usr/local/nginx --with-http_stub_status_module --with-http_ssl_module --with-cc-opt='-O2' \
-	&& make && make install && echo "nginx done by tang"
+# wget -c http://nginx.org/download/nginx-1.7.8.tar.gz
+# tar zxf nginx-1.7.8.tar.gz && cd nginx-1.7.8
+# ./configure --user=www --group=www --prefix=/usr/local/nginx --with-http_stub_status_module --with-http_ssl_module --with-cc-opt='-O2' \
+	# && make && make install && echo "nginx done by tang"
 
 
 
