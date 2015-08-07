@@ -20,7 +20,7 @@ PermDeny=$(cat /dev/ppp | grep "Operation not permitted" |wc -l)
 VPN_LOCAL=192.168.100.254
 VPN_REMOTE=192.168.100.100-200
 # use the best dns-server in your country, seperate by blank
-DNS_SERVER=(208.67.222.222 112.90.143.29)
+DNS_SERVER="208.67.222.222 112.90.143.29"
 
 # VPN_IP can be ip or domain
 VPN_IP=$(curl ifconfig.me)
@@ -50,9 +50,19 @@ sed -i '/net.ipv4.ip_forward/s/.*/net.ipv4.ip_forward = 1/' /etc/sysctl.conf
 sysctl -p
 
 /etc/init.d/iptables start
+
+# pptpd port
 iptables -I INPUT -p tcp -m tcp --dport 1723 -j ACCEPT
-iptables -I INPUT -p tcp -m udp --dport 53 -j ACCEPT
+# dns port
+iptables -I INPUT -p udp -m udp --dport 53 -j ACCEPT
+iptables -I INPUT -p tcp -m tcp --dport 53 -j ACCEPT
+# allow gre protocal
 iptables -I INPUT -p grep -j ACCETP
+
+# set mtu 
+iptables -I FORWARD -p tcp --syn -i ppp+ -j TCPMSS --set-mss 1356
+
+
 # get default gateway eth
 gwEth=$(route -n |grep '^0.0.0.0' |awk '{print $NF}')
 iptables -t nat -I POSTROUTING -o $gwEth -j MASQUERADE 
