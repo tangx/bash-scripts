@@ -25,26 +25,89 @@ to an rsync daemon, and require SRC or DEST to start with a module name.
 
 Options
  -v, --verbose               increase verbosity
- -q, --quiet                 suppress non-error messages
+ -q, --quiet                 suppress non-error messages 
+                             抑制 non-error 信息
      --no-motd               suppress daemon-mode MOTD (see manpage caveat)
  -c, --checksum              skip based on checksum, not mod-time & size
  -a, --archive               archive mode; equals -rlptgoD (no -H,-A,-X)
+                             归档模式; 相当于 -rlptgoD (非 -H, -A, -X)
      --no-OPTION             turn off an implied OPTION (e.g. --no-D)
+                             关闭隐含选项 
  -r, --recursive             recurse into directories
+                             目录递归
  -R, --relative              use relative path names
-     --no-implied-dirs       don't send implied dirs with --relative
+                             使用相对路径
+     --no-implied-dirs       don\'t send implied dirs with --relative
+                             不发送隐藏目录, 与 --relative 一起使用
  -b, --backup                make backups (see --suffix & --backup-dir)
+                             备份目标目录同名文件(参考 --suffix & --backup-dir)
      --backup-dir=DIR        make backups into hierarchy based in DIR
+                             指定同名文件的备份路径。默认为DEST目录。可使用绝对路径。
      --suffix=SUFFIX         set backup suffix (default ~ w/o --backup-dir)
+                             指定桐木文件的备份后缀。默认为~。可使用变量
+{
+  $ rsync --progress -a -b --backup 1/ 2/                             # 2/index.html~
+  $ rsync --progress -a -b --backup-dir=bak --suffix=ori 1/ 2/        # 2/bak/indexori
+  $ rsync --progress -a -b --backup-dir=bak --suffix=.ori_$(date +%F) 1/ 2/           # 2/bak/index.html.ori_2015-09-06
+  $ rsync --progress -a -b --backup-dir=/tmp/2bak --suffix=.ori_$(date +%F) 1/ 2/     # /tmp/2bak/index.html.ori_2015-09-06
+  $ rsync --progress -a -b --backup-dir=/tmp/2bak --suffix=".ori_$(date +%F)" 1/ 2/   # /tmp/2bak/index.html.ori_2015-09-06
+  
+  # tree 2/
+  2/
+  ├── bak
+  │   ├── index.htmlori
+  │   └── index.html.ori_2015-09-06
+  ├── index.html
+  └── index.html~
+} 
+       
  -u, --update                skip files that are newer on the receiver
+                             DEST中的文件较新则跳过
      --inplace               update destination files in-place (SEE MAN PAGE)
+                             原地更新目标文件
      --append                append data onto shorter files
+                             将源文件多出的行数添加到目标文件中。之前的忽略。同步后，文件可能不一致
      --append-verify         like --append, but with old data in file checksum
+                             与 --append 类似。但是会对目标文件进行校验。同步后，文件一直
+{
+  # 校验失败
+  $ rsync -a --progress --append-verify 1/ 2/
+  sending incremental file list
+  ./
+  index.html
+           812 100%  792.97kB/s    0:00:00 (xfer#1, to-check=0/2)
+  WARNING: index.html failed verification -- update retained (will try again).
+  index.html
+           812 100%  792.97kB/s    0:00:00 (xfer#2, to-check=0/2)
+
+  sent 1041 bytes  received 95 bytes  2272.00 bytes/sec
+  total size is 812  speedup is 0.71
+  $ diff 1/index.html 2/index.html 
+
+
+  $ date >> 1/index.html 
+
+  # 校验成功
+  $ rsync -a --progress --append-verify 1/ 2/
+  sending incremental file list
+  index.html
+           899 100%  877.93kB/s    0:00:00 (xfer#1, to-check=0/2)
+
+  sent 179 bytes  received 31 bytes  420.00 bytes/sec
+  total size is 899  speedup is 4.28
+
+}
+
  -d, --dirs                  transfer directories without recursing
+                             非递归同步目录
  -l, --links                 copy symlinks as symlinks
+                             保持软连接文件属性
  -L, --copy-links            transform symlink into referent file/dir
+                             将软连接转换为关联的文件或目录后进行传输
      --copy-unsafe-links     only "unsafe" symlinks are transformed
+                             仅"unsafe"软连接将被转换
      --safe-links            ignore symlinks that point outside the source tree
+                             忽略指向源目录树外的软连接
  -k, --copy-dirlinks         transform symlink to a dir into referent dir
  -K, --keep-dirlinks         treat symlinked dir on receiver as dir
  -H, --hard-links            preserve hard links
