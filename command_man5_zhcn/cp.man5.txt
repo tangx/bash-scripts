@@ -1,0 +1,118 @@
+Usage: cp [OPTION]... [-T] SOURCE DEST
+  or:  cp [OPTION]... SOURCE... DIRECTORY
+  or:  cp [OPTION]... -t DIRECTORY SOURCE...
+Copy SOURCE to DEST, or multiple SOURCE(s) to DIRECTORY.
+
+Mandatory arguments to long options are mandatory for short options too.
+  -a, --archive                same as -dR --preserve=all
+      --backup[=CONTROL]       make a backup of each existing destination file
+  -b                           like --backup but does not accept an argument
+      --copy-contents          copy contents of special files when recursive
+  -d                           same as --no-dereference --preserve=links
+  -f, --force                  if an existing destination file cannot be
+                                 opened, remove it and try again (redundant if
+                                 the -n option is used)
+                               如果一个已存在的文件不能被打开，删除并重试。（冗余如果使用-n选项）
+  -i, --interactive            prompt before overwrite (overrides a previous -n option)
+                               覆盖前提示。（覆盖前面的-n选项）
+  -H                           follow command-line symbolic links in SOURCE
+                               复制软连接指向的文件。而非复制软连接本身。
+      {
+        $ ln -s cp.man5.txt cp.man5.txt.lnk
+        $ cp -H cp.man5.txt.lnk /tmp/
+        $ ll cp.man5.txt cp.man5.txt.lnk /tmp/cp.man5.txt.lnk 
+        -rw-rw-r-- 1 tangx tangx 7214 Sep  7 16:41 cp.man5.txt
+        lrwxrwxrwx 1 tangx tangx   11 Sep  7 16:48 cp.man5.txt.lnk -> cp.man5.txt
+        -rw-rw-r-- 1 tangx tangx 7214 Sep  7 16:48 /tmp/cp.man5.txt.lnk
+      }
+
+  -l, --link                   link files instead of copying
+                               复制软连接本身。复制后，软连接可能失效。
+      {
+        $ ln -s cp.man5.txt cp.man5.txt.lnk
+        $ cp -H cp.man5.txt.lnk /tmp/
+        $ ll cp.man5.txt cp.man5.txt.lnk /tmp/cp.man5.txt.lnk 
+        -rw-rw-r-- 1 tangx tangx 7214 Sep  7 16:41 cp.man5.txt
+        lrwxrwxrwx 2 tangx tangx   11 Sep  7 16:48 cp.man5.txt.lnk -> cp.man5.txt
+        lrwxrwxrwx 2 tangx tangx   11 Sep  7 16:48 /tmp/cp.man5.txt.lnk -> cp.man5.txt
+      }
+
+  -L, --dereference            always follow symbolic links in SOURCE
+                               始终跟随软连接指向的源
+  -n, --no-clobber             do not overwrite an existing file (overrides
+                                 a previous -i option)
+                               不覆盖已存在文件（覆盖之前的-i选项）
+  -P, --no-dereference         never follow symbolic links in SOURCE
+                               永不跟随软连接执行的源。（复制软连接）
+                               
+  -p                           same as --preserve=mode,ownership,timestamps
+                               省略选项，同 --preserve=mode,ownership,timestamps
+  
+      --preserve[=ATTR_LIST]   preserve the specified attributes (default:
+                                 mode,ownership,timestamps), if possible
+                                 additional attributes: context, links, xattr,
+                                 all
+  -c                           same as --preserve=context
+      --no-preserve=ATTR_LIST  don\'t preserve the specified attributes
+                               不保护特殊权限
+      --parents                use full source file name under DIRECTORY
+                               
+  -R, -r, --recursive          copy directories recursively
+                               递归复制目录
+      --reflink[=WHEN]         control clone/CoW copies. See below.
+      --remove-destination     remove each existing destination file before
+                                 attempting to open it (contrast with --force)
+      --sparse=WHEN            control creation of sparse files. See below.
+      --strip-trailing-slashes  remove any trailing slashes from each SOURCE
+                                 argument
+  -s, --symbolic-link          make symbolic links instead of copying
+                               复制软连接代替源。只能在原软连接目录内复制。
+      {$ cp -s awk.ori.lnk /tmp/
+        cp: `/tmp/awk.ori.lnk`: can make relative symbolic links only in current directory
+      }
+  -S, --suffix=SUFFIX          override the usual backup suffix
+                               覆盖时备份源文件。
+      {
+        $ cp -S.ori cp.man5.txt /tmp/
+        $ cp --suffix=.ori cp.man5.txt /tmp/
+      } 
+  -t, --target-directory=DIRECTORY  copy all SOURCE arguments into DIRECTORY
+                                    复制所有源文件参数到新目录中
+  -T, --no-target-directory    treat DEST as a normal file
+  -u, --update                 copy only when the SOURCE file is newer
+                                 than the destination file or when the
+                                 destination file is missing
+                               只有当源文件比目标文件新是才复制
+  -v, --verbose                explain what is being done
+  -x, --one-file-system        stay on this file system
+  -Z, --context=CONTEXT        set security context of copy to CONTEXT
+      --help     display this help and exit
+      --version  output version information and exit
+
+By default, sparse SOURCE files are detected by a crude heuristic and the
+corresponding DEST file is made sparse as well.  That is the behavior
+selected by --sparse=auto.  Specify --sparse=always to create a sparse DEST
+file whenever the SOURCE file contains a long enough sequence of zero bytes.
+Use --sparse=never to inhibit creation of sparse files.
+
+When --reflink[=always] is specified, perform a lightweight copy, where the
+data blocks are copied only when modified.  If this is not possible the copy
+fails, or if --reflink=auto is specified, fall back to a standard copy.
+
+The backup suffix is `~', unless set with --suffix or SIMPLE_BACKUP_SUFFIX.
+The version control method may be selected via the --backup option or through
+the VERSION_CONTROL environment variable.  Here are the values:
+
+  none, off       never make backups (even if --backup is given)
+  numbered, t     make numbered backups
+  existing, nil   numbered if numbered backups exist, simple otherwise
+  simple, never   always make simple backups
+
+As a special case, cp makes a backup of SOURCE when the force and backup
+options are given and SOURCE and DEST are the same name for an existing,
+regular file.
+
+Report cp bugs to bug-coreutils@gnu.org
+GNU coreutils home page: <http://www.gnu.org/software/coreutils/>
+General help using GNU software: <http://www.gnu.org/gethelp/>
+For complete documentation, run: info coreutils 'cp invocation'
