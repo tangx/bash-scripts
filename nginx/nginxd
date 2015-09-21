@@ -30,7 +30,8 @@ NGINX_ACTION=$1
 
 function status()
 {
-  if [ -f  $NGINX_PID ] 
+  sleep 2
+  if [ -f $NGINX_PID ] 
   then
   {
     NGINX_PID_NUMBER=$(cat $NGINX_PID )
@@ -45,7 +46,7 @@ function status()
 
 function start()
 {
-  $NGINX -c $NGINX_CONF
+  [ ! -f $NGINX_PID ]  && $NGINX -c $NGINX_CONF
   status ;
 }
 
