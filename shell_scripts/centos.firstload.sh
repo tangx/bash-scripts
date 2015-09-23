@@ -1,12 +1,16 @@
 #!/bin/bash
 
-yum -y install bash perl tree 
-yum -y install wget nc nmap lrzsz
-yum -y install unzip  dos2unix
-yum -y install lsof iftop iotop 
-yum -y install ntpdate ntp
-yum -y install openssl-devel openssh-devel
+
+yum -y install wget lrzsz
+yum -y install tcpdump nmap nc
+yum -y install bash python perl
+yum -y install iostat sysstat top iftop lsof iotop
+yum -y install tree 
+yum -y install ntpdate 
 yum -y install nfs-utils rpcbind
+yum -y install bind-utils
+yum -y install tar unzip 
+
 
 # yum -y update
 
