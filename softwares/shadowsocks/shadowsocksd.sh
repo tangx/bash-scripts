@@ -6,7 +6,7 @@
 [ $UID -ne 0 ] && exit 1 ;
 
 # SSSERVER=/usr/bin/ssserver
-SSSERVER=ssserver
+SSSERVER=SSSERVER_BIN
 CONF_FILE=/etc/shadowsocks/ss.json.conf
 PID_FILE=/var/run/ssserver.pid
 
