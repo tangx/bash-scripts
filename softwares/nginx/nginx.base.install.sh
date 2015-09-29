@@ -2,7 +2,7 @@
 #
 # author: uyinn@live.com
 #
-# download_url: https://raw.githubusercontent.com/uyinn/bash-scripts/master/nginx/nginx.base.install.sh
+# download_url: https://raw.githubusercontent.com/uyinn/bash-scripts/master/softwares/nginx/nginx.base.install.sh
 # 
 # @@@@@@@@@@@@@@@@@@@@@
 # 
@@ -116,7 +116,7 @@
 
 # 下载 /etc/init.d/nginxd 脚本
 
-wget https://raw.githubusercontent.com/uyinn/bash-scripts/master/nginx/nginxd -O /etc/init.d/nginxd
+wget https://raw.githubusercontent.com/uyinn/bash-scripts/master/softwares/nginx/nginxd -O /etc/init.d/nginxd
 sed -i "s@NGINX_PREFIX=\$NGINX_PREFIX@NGINX_PREFIX=$NGINX_PREFIX@" /etc/init.d/nginxd
 chmod +x /etc/init.d/nginxd
 
