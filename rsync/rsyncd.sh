@@ -6,7 +6,7 @@
 # BASEDIR=$(dirname $(which rsync))
 BASEDIR=/usr/bin
 PIDFILE=/var/run/rsyncd.pid
-CONF_FILE=/etc/rsyncd/rsyncd.conf
+CONF_FILE=/usr/local/rsync/etc/rsyncd.conf
 
 
 function DoAction()
