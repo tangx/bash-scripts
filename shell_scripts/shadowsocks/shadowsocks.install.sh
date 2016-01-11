@@ -24,7 +24,7 @@
   
   
 # 获取启动文件
-  wget https://raw.githubusercontent.com/uyinn/bash-scripts/master/softwares/shadowsocks/shadowsocksd.sh -O /etc/init.d/
+  wget https://raw.githubusercontent.com/uyinn/bash-scripts/master/softwares/shadowsocks/shadowsocksd.sh 
   chmod +x shadowsocksd.sh
   sed -i "s/SSSERVER_BIN/$(which ssserver)/" shadowsocksd.sh 
   sed -i "s/CONFIG_DIR/$SHADOW_DIR/" shadowsocksd.sh 
