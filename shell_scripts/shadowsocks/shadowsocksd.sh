@@ -7,7 +7,8 @@
 
 # SSSERVER=/usr/bin/ssserver
 SSSERVER=SSSERVER_BIN
-CONF_FILE=/etc/shadowsocks/ss.json.conf
+CONF_DIR=CONFIG_DIR
+CONF_FILE=$CONF_DIR/ss.json.conf
 PID_FILE=/var/run/ssserver.pid
 
 

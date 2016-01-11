@@ -10,13 +10,16 @@
 
 
 # 获取配置文件
-  mkdir -p /etc/shadowsocks/
-  wget https://raw.githubusercontent.com/uyinn/bash-scripts/master/softwares/shadowsocks/ss.json.conf -O 
+  # mkdir -p /etc/shadowsocks/
+  SHADOW_DIR=/usr/local/shadowscoks/
+  mkdir -p $SHADOW_DIR
+  cd $_
+  wget https://raw.githubusercontent.com/uyinn/bash-scripts/master/softwares/shadowsocks/ss.json.conf 
 
-  PUB_IP=$(curl -s ip.cn | grep -oP '(\d+\.)+\d+'))
+  PUB_IP=$(curl -s ip.cn | grep -oP '(\d+\.)+\d+')
   sed -i 's/PUBLIC_IP/$PUB_IP/' ss.json.conf 
 
-  mv ss.json.conf /etc/shadowsocks/
+  # mv ss.json.conf /etc/shadowsocks/
 
   
   
@@ -24,6 +27,7 @@
   wget https://raw.githubusercontent.com/uyinn/bash-scripts/master/softwares/shadowsocks/shadowsocksd.sh -O /etc/init.d/
   chmod +x shadowsocksd.sh
   sed -i "s/SSSERVER_BIN/$(which ssserver)/" shadowsocksd.sh 
+  sed -i "s/CONFIG_DIR/$SHADOW_DIR/" shadowsocksd.sh 
   mv shadowsocksd.sh /etc/init.d/
   
   
