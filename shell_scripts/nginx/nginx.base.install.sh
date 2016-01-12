@@ -2,13 +2,16 @@
 #
 # author: uyinn@live.com
 #
-# download_url: https://raw.githubusercontent.com/uyinn/bash-scripts/master/softwares/nginx/nginx.base.install.sh
+# download_url: https://raw.githubusercontent.com/uyinn/bash-scripts/master/shell_scripts/nginx/nginx.base.install.sh
 # 
 # @@@@@@@@@@@@@@@@@@@@@
 # 
 # 更新记录
 # 2015-07-30
 #   - 模块化 /etc/init.d/nginxd , 注释新建nginxd段代码, 通过下载获取
+
+## NGINX 在GITHUB 上的https 地址
+  NGINX_GITHUB_URL=https://raw.githubusercontent.com/uyinn/bash-scripts/master/shell_scripts/nginx
 
 # @@@@@@@@@@@@@@@@@@@@@
 # 参数设置
@@ -116,7 +119,7 @@
 
 # 下载 /etc/init.d/nginxd 脚本
 
-wget https://raw.githubusercontent.com/uyinn/bash-scripts/shell_scripts/nginx/nginxd -O /etc/init.d/nginxd
+wget $NGINX_GITHUB_URL/nginxd -O /etc/init.d/nginxd
 sed -i "s@NGINX_PREFIX=\$NGINX_PREFIX@NGINX_PREFIX=$NGINX_PREFIX@" /etc/init.d/nginxd
 chmod +x /etc/init.d/nginxd
 
