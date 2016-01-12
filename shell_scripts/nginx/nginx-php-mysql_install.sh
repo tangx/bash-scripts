@@ -119,5 +119,3 @@ service php-fastcgi start
 chkconfig --add php-fastcgi
 chkconfig php-fastcgi on
 
-
-# 安装配置mysql
