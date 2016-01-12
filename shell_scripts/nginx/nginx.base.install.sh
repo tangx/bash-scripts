@@ -116,7 +116,7 @@
 
 # 下载 /etc/init.d/nginxd 脚本
 
-wget https://raw.githubusercontent.com/uyinn/bash-scripts/master/softwares/nginx/nginxd -O /etc/init.d/nginxd
+wget https://raw.githubusercontent.com/uyinn/bash-scripts/shell_scripts/nginx/nginxd -O /etc/init.d/nginxd
 sed -i "s@NGINX_PREFIX=\$NGINX_PREFIX@NGINX_PREFIX=$NGINX_PREFIX@" /etc/init.d/nginxd
 chmod +x /etc/init.d/nginxd
 
