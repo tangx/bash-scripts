@@ -14,7 +14,7 @@ yum -y update
 # yum install nginx sudo
 
 # 安装pcre
-wget -c http://downloads.sourceforge.net/project/pcre/pcre/8.37/pcre-8.37.tar.gz
+wget -c http://downloads.sourceforge.net/project/pcre/pcre/8.33/pcre-8.33.tar.gz
 tar jxf pcre-8.33.tar.bz2 && cd pcre-8.33
 ./configure && make && make install &&  echo "prec done by tang"
 
