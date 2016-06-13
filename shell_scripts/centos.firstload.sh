@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# https://raw.githubusercontent.com/uyinn/bash-scripts/master/shell_scripts/centos.firstload.sh
 
 yum -y install wget lrzsz
 yum -y install tcpdump nmap nc
