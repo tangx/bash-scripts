@@ -11,6 +11,7 @@ yum -y install ntpdate
 yum -y install nfs-utils rpcbind
 yum -y install bind-utils
 yum -y install tar unzip 
+yum -y install dos2unix unix2dos
 
 
 # yum -y update
