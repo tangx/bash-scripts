@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-
+# wget https://raw.githubusercontent.com/uyinn/bash-scripts/master/shell_scripts/nginx/nginx-php-mysql_install.sh && sh nginx-php-mysql_install.sh
 yum -y install wget lrzsz dos2unix gcc gcc-g++ make 
 
 # rpm -Uvh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
