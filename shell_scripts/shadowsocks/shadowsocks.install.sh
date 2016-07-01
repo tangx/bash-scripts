@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-
+# wgethttps://raw.githubusercontent.com/uyinn/bash-scripts/master/shell_scripts/shadowsocks/shadowsocks.install.sh &&　shadowsocks.install.sh
   which pip > /dev/null 2>&1 || {
     wget -c https://bootstrap.pypa.io/get-pip.py
     python get-pip.py 
