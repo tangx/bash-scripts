@@ -2,12 +2,15 @@
 #
 # author: uyinn@live.com
 #
-# download_url: https://raw.githubusercontent.com/uyinn/bash-scripts/master/shell_scripts/nginx/nginx.base.install.sh
+# download_url: 
+#    wget https://raw.githubusercontent.com/uyinn/bash-scripts/master/shell_scripts/nginx/nginx.base.install.sh && sh nginx.base.install.sh
 # 
 # @@@@@@@@@@@@@@@@@@@@@
 # 
 # 更新记录
-# 2015-07-30
+# @2016-07-01
+#   + 自动获取nginx与pcre版本
+# @2015-07-30
 #   - 模块化 /etc/init.d/nginxd , 注释新建nginxd段代码, 通过下载获取
 
 ## NGINX 在GITHUB 上的https 地址
@@ -19,6 +22,18 @@
   NGINX_USER=www
   NGINX_GROUP=$NGINX_USER
   
+# 安装包变量
+  VAR_NGINX_FILE=$(curl -s https://nginx.org/en/download.html |grep -oP 'nginx-([0-9]+\.)+tar\.gz'   |head -n 1)
+  VAR_NGINX_VER=$(echo nginx-1.11.1.tar.gz | grep  -oP '([0-9]+\.)+[0-9]+')
+  VAR_NGINX_URL=https://nginx.org/download/$VAR_NGINX_FILE
+  
+  #https://sourceforge.net/projects/pcre/
+  
+  VAR_PCRE_FILE=$(curl -s https://sourceforge.net/projects/pcre/files/pcre/ |grep -m 1 'Looking for the latest version' -A 1 |grep -oP 'pcre-\d+\.\d+.tar.bz2')
+  VAR_PCRE_VER=$(echo $VAR_PCRE_FILE | grep -oP '\d+\.\d+')
+  VAR_PCRE_URL=http://downloads.sourceforge.net/project/pcre/pcre/${VAR_PCRE_VER}/$VAR_PCRE_FILE
+  # VAR_PCRE_URL=http://downloads.sourceforge.net/project/pcre/pcre/8.39/pcre-8.39.tar.bz2
+  
 # 安装依赖包
   yum -y install gcc gcc-c++ make 
   yum -y install wget lrzsz dos2unix nc nmap unzip bash
@@ -27,8 +42,8 @@
   mkdir -p /opt/src/nginx && cd $_
 
 # 安装pcre
-  wget -c http://downloads.sourceforge.net/project/pcre/pcre/8.33/pcre-8.33.tar.bz2
-  tar jxf pcre-8.33.tar.bz2 
+  wget -c $VAR_PCRE_URL
+  tar jxf pcre-${VAR_PCRE_VER}.tar.bz2
   # cd pcre-8.33
   # ./configure && make && make install
   # cd ..
@@ -40,8 +55,8 @@
   # 新建nginx运行账户
   id www > /dev/null 2>&1 || useradd -s /sbin/nologin www
   
-  wget -c http://nginx.org/download/nginx-1.7.8.tar.gz
-  tar zxf nginx-1.7.8.tar.gz && cd nginx-1.7.8
+  wget -c $VAR_NGINX_URL
+  tar zxf $VAR_NGINX_FILE && cd nginx-${VAR_NGINX_VER}
   ./configure --user=$NGINX_USER --group=$NGINX_GROUP --prefix=$NGINX_PREFIX \
     --with-http_stub_status_module \
     --with-http_ssl_module \
@@ -50,7 +65,7 @@
     --with-poll_module \
     --with-http_stub_status_module \
     --with-http_ssl_module \
-    --with-pcre=../pcre-8.33/  \
+    --with-pcre=../pcre-${VAR_PCRE_VER}/  \
     && make && make install && echo "nginx done by uyinn"
 
 
