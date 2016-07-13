@@ -24,14 +24,15 @@
   
 # 安装包变量
   VAR_NGINX_FILE=$(curl -s https://nginx.org/en/download.html |grep -oP 'nginx-([0-9]+\.)+tar\.gz'   |head -n 1)
-  VAR_NGINX_VER=$(echo nginx-1.11.1.tar.gz | grep  -oP '([0-9]+\.)+[0-9]+')
+  VAR_NGINX_VER=$(echo $VAR_NGINX_FILE | grep  -oP '([0-9]+\.)+[0-9]+')
   VAR_NGINX_URL=https://nginx.org/download/$VAR_NGINX_FILE
   
   #https://sourceforge.net/projects/pcre/
   
-  VAR_PCRE_FILE=$(curl -s https://sourceforge.net/projects/pcre/files/pcre/ |grep -m 1 'Looking for the latest version' -A 1 |grep -oP 'pcre-\d+\.\d+.tar.bz2')
+  # VAR_PCRE_FILE=$(curl -s https://sourceforge.net/projects/pcre/files/pcre/ |grep -m 1 'Looking for the latest version' -A 1 |grep -oP 'pcre-\d+\.\d+.tar.bz2')
+  VAR_PCRE_FILE=pcre-8.39.tar.gz
   VAR_PCRE_VER=$(echo $VAR_PCRE_FILE | grep -oP '\d+\.\d+')
-  VAR_PCRE_URL=http://downloads.sourceforge.net/project/pcre/pcre/${VAR_PCRE_VER}/$VAR_PCRE_FILE
+  VAR_PCRE_URL=http://vorboss.dl.sourceforge.net/project/pcre/pcre/${VAR_PCRE_VER}/$VAR_PCRE_FILE
   # VAR_PCRE_URL=http://downloads.sourceforge.net/project/pcre/pcre/8.39/pcre-8.39.tar.bz2
   
 # 安装依赖包
@@ -43,7 +44,7 @@
 
 # 安装pcre
   wget -c $VAR_PCRE_URL
-  tar jxf pcre-${VAR_PCRE_VER}.tar.bz2
+  tar zxf pcre-${VAR_PCRE_VER}.tar.gz
   # cd pcre-8.33
   # ./configure && make && make install
   # cd ..
