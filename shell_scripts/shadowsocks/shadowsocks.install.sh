@@ -7,7 +7,7 @@
 # 安装命令
 
   # wget https://raw.githubusercontent.com/uyinn/bash-scripts/master/shell_scripts/shadowsocks/shadowsocks.install.sh 
-  # sh shadowsocks.install.sh
+  # sh shadowsocks.install.sh [ec2]
 
   
 ################
