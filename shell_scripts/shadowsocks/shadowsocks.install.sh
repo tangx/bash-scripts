@@ -29,7 +29,7 @@
   mkdir -p $SHADOW_DIR
   cd $_
   
-  [ -f ss.json.conf ] && cp -a ss.json.conf{,.ori_$timestamp}
+  [ -f ss.json.conf ] && mv ss.json.conf{,.ori_$timestamp}
   wget https://raw.githubusercontent.com/uyinn/bash-scripts/master/shell_scripts/shadowsocks/ss.json.conf
 
 
@@ -45,11 +45,15 @@
   sed -i "s/PUBLIC_IP/$PUB_IP/" ss.json.conf 
   
 # 获取启动文件
-  [ -f shadowsocksd.sh ] && cp -a shadowsocksd.sh{,.ori_$timestamp}
+  
   wget https://raw.githubusercontent.com/uyinn/bash-scripts/master/shell_scripts/shadowsocks/shadowsocksd.sh
   chmod +x shadowsocksd.sh
   sed -i "s@SSSERVER_BIN@$(which ssserver)@" shadowsocksd.sh 
   sed -i "s@CONFIG_DIR@$SHADOW_DIR@" shadowsocksd.sh 
+  
+  [ -f /etc/init.d/shadowsocksd.sh ] && mv /etc/init.d/shadowsocksd.sh{,.ori_$timestamp}
   mv shadowsocksd.sh /etc/init.d/
   
   
+echo "Usage: "
+echo "  /etc/init.d/shadowsocksd.sh [start|stop|restart]"
