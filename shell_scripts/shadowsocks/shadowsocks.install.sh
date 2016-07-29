@@ -1,10 +1,20 @@
 #!/bin/bash
 #
+# author
+# shadowscoks installer
+#
 
+# 安装命令
 
-timestamp=$(date+ %s)
+  # wget https://raw.githubusercontent.com/uyinn/bash-scripts/master/shell_scripts/shadowsocks/shadowsocks.install.sh 
+  # sh shadowsocks.install.sh
 
-# wget https://raw.githubusercontent.com/uyinn/bash-scripts/master/shell_scripts/shadowsocks/shadowsocks.install.sh && sh shadowsocks.install.sh
+  
+################
+
+  timestamp=$(date+ %s)
+
+# 安装pip
   which pip > /dev/null 2>&1 || {
     wget -c https://bootstrap.pypa.io/get-pip.py
     python get-pip.py 
