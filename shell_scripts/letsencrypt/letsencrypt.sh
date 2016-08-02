@@ -21,7 +21,7 @@ fi
 
 
 
-KEY_PREFIX="${DOMAIN_KEY%%.*}"
+KEY_PREFIX="${DOMAIN_KEY%.*}"
 DOMAIN_KEY_PATH="${DOMAIN_KEY%.*}"
 mkdir -p $DOMAIN_KEY_PATH
 DOMAIN_KEY="$DOMAIN_KEY_PATH/$DOMAIN_KEY"
@@ -84,10 +84,9 @@ fi
 
 if [ -f "$DOMAIN_CHAINED_CRT" ];then
     # mkdir -p $DOMAIN_KEY_PATH/old/
-    mv $DOMAIN_CHAINED_CRT "${DOMAIN_CHAINED_CRT}-OLD-$(date +%y%m%d-%H%M%S)"
-    cat "$DOMAIN_CRT" lets-encrypt-x3-cross-signed.pem > "$DOMAIN_CHAINED_CRT"
+    mv $DOMAIN_CHAINED_CRT "${DOMAIN_CHAINED_CRT}-OLD-$(date +%y%m%d-%H%M%S)"    
 fi
-
+cat "$DOMAIN_CRT" lets-encrypt-x3-cross-signed.pem > "$DOMAIN_CHAINED_CRT"
 
 
 if [ "$LIGHTTPD" = "TRUE" ];then
@@ -97,7 +96,7 @@ fi
 
 echo -e "\e[01;32mNew cert: $DOMAIN_CHAINED_CRT has been generated\e[0m"
 
-rm -f $DOMAIN_CRT $DOMAIN_CSR
+# rm -f $DOMAIN_CRT $DOMAIN_CSR
 if [ -d "$NGINX_SSL_KEY_PATH" ];then
 
     \cp -a  $DOMAIN_KEY_PATH/* $NGINX_SSL_KEY_PATH/ 
