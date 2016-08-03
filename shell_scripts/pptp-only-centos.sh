@@ -17,8 +17,12 @@ PermDeny=$(cat /dev/ppp | grep "Operation not permitted" |wc -l)
 [ $PermDeny -eq 1 ] && echo "Permission Denied: no right to setup pptp vpn"  && exit 1
 
 # PARAMENTS
-VPN_LOCAL=192.168.100.254
-VPN_REMOTE=192.168.100.100-200
+# VPN_LOCAL=192.168.84.254
+# VPN_REMOTE=192.168.84.100-200
+
+VPN_LOCAL=10.11.10.254
+VPN_REMOTE=10.11.10.123-165
+
 # use the best dns-server in your country, seperate by blank
 DNS_SERVER="208.67.222.222 112.90.143.29"
 
