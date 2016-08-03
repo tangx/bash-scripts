@@ -17,17 +17,15 @@ PermDeny=$(cat /dev/ppp | grep "Operation not permitted" |wc -l)
 [ $PermDeny -eq 1 ] && echo "Permission Denied: no right to setup pptp vpn"  && exit 1
 
 # PARAMENTS
-# VPN_LOCAL=192.168.84.254
-# VPN_REMOTE=192.168.84.100-200
+VPN_LOCAL=192.168.84.254
+VPN_REMOTE=192.168.84.100-200
 
-VPN_LOCAL=10.11.10.254
-VPN_REMOTE=10.11.10.123-165
 
 # use the best dns-server in your country, seperate by blank
 DNS_SERVER="208.67.222.222 112.90.143.29"
 
 # VPN_IP can be ip or domain
-VPN_IP=$(curl ifconfig.me)
+VPN_IP=$(curl -s ip.cn |grep -oP '(\d+\.)+\d+')
 VPN_USER=vpnuser
 VPN_PASS=vpnpass
 
@@ -61,15 +59,15 @@ iptables -I INPUT -p tcp -m tcp --dport 1723 -j ACCEPT
 iptables -I INPUT -p udp -m udp --dport 53 -j ACCEPT
 iptables -I INPUT -p tcp -m tcp --dport 53 -j ACCEPT
 # allow gre protocal
-iptables -I INPUT -p grep -j ACCETP
+iptables -I INPUT -p gre -j ACCETP
 
 # set mtu 
 iptables -I FORWARD -p tcp --syn -i ppp+ -j TCPMSS --set-mss 1356
 
-
 # get default gateway eth
 gwEth=$(route -n |grep '^0.0.0.0' |awk '{print $NF}')
 iptables -t nat -I POSTROUTING -o $gwEth -j MASQUERADE 
+iptables -t nat -I POSTROUTING -s ${VPN_LOCAL%.*}.0/24 -o $gwEth -j MASQUERADE 
 /etc/init.d/iptables save
 
 ##############
