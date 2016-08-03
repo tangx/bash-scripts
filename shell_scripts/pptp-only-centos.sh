@@ -88,3 +88,5 @@ echo -e '\E[37;44m'"\033[1m Password: $VPN_PASS\033[0m"
 
 
 ) 2>&1 |tee /tmp/ppt-vpn-install.log
+
+/etc/init.d/iptables stop
