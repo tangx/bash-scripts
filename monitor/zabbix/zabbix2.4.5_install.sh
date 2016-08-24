@@ -58,9 +58,10 @@ yum -y install make gcc gcc-c++ autoconf
 id zabbix > /dev/null 2>&1 || useradd -s /sbin/nologin zabbix
 
 mkdir -p /opt/src/zabbix_`date +%F` && cd $_
-wget -c  http://downloads.sourceforge.net/project/zabbix/ZABBIX%20Latest%20Stable/2.4.5/zabbix-2.4.5.tar.gz
+# wget -c  http://downloads.sourceforge.net/project/zabbix/ZABBIX%20Latest%20Stable/2.4.5/zabbix-2.4.5.tar.gz
+wget http://downloads.sourceforge.net/project/zabbix/ZABBIX%20Latest%20Stable/2.4.8/zabbix-2.4.8.tar.gz?r=&ts=1472005033&use_mirror=ncu
 
-tar zxf zabbix-2.4.5.tar.gz && cd zabbix-2.4.5
+tar zxf zabbix-2.4.8.tar.gz && cd zabbix-2.4.8
 ./configure --prefix=/mnt/app/zabbix --enable-server --enable-proxy --enable-agent --with-mysql=/usr/bin/mysql_config --with-net-snmp --with-libcurl && make install
 
 mysql -u$MYSQL_ZABBIX_USER -p$MYSQL_ZABBIX_PASSWD zabbix< ./database/mysql/schema.sql 
