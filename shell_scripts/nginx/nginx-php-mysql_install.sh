@@ -14,8 +14,10 @@ yum -y install wget lrzsz dos2unix gcc gcc-g++ make
 yum -y install php-cli php spawn-fcgi wget
 [ -f /usr/bin/spawn-fcgi ] || rpm -ivh http://dl.fedoraproject.org/pub/epel/6/x86_64/spawn-fcgi-1.6.3-1.el6.x86_64.rpm
 
-cat > /usr/bin/php-fastcgi<<EOF
+cat > /usr/bin/php-fastcgi<<'EOF'
 #!/bin/sh
+
+source /etc/profile
 
 if [ `grep -c "nginx" /etc/passwd` = "1" ]; then 
    FASTCGI_USER=nginx
@@ -36,7 +38,7 @@ chmod +x /usr/bin/php-fastcgi
 
 cat > /etc/init.d/php-fastcgi <<'EOF'
 #!/bin/sh
-
+#
 # php-fastcgi - Use php-fastcgi to run php applications
 #
 # chkconfig: - 85 15
