@@ -26,6 +26,8 @@ yum -y install dos2unix unix2dos
 # python get-pip.py 
 # pip install awscli
 
+# curl -L https://bootstrap.pypa.io/get-pip.py | sudo python -
+
 
 \cp -a /usr/share/zoneinfo/Asia/Hong_Kong /etc/localtime 
 
