@@ -1,5 +1,6 @@
 #!/bin/bash
 #
+# for centos 5,6,7 
 # rsync server install
 #
 #
@@ -9,17 +10,26 @@ GITHUB_URL=https://raw.githubusercontent.com/uyinn/bash-scripts/master/shell_scr
 
 PREFIX=/usr/local/rsync
 
+
+SERVER_RELEASE=$(grep -oP '\d' /etc/redhat-release |head -n 1)
+
+
+
 yum -y install wget tree
 yum -y install rsync 
 
 
-mkdir -p $PREFIX/{etc,init.d,secret}
+mkdir -p $PREFIX/{etc,init.d,secret,client}
 
-wget $GITHUB_URL/etc/rsyncd.conf -O $PREFIX/etc/
-wget $GITHUB_URL/init.d/rsyncd.sh -O $PREFIX/init.d/
-wget $GITHUB_URL/secret/data3.scts -O $PREFIX/secret/
+wget $GITHUB_URL/etc/rsyncd.conf -P $PREFIX/etc/
+wget -c $GITHUB_URL/init.d/rsyncd.sh -P $PREFIX/init.d/
+wget -c $GITHUB_URL/secret/data3.scts -P $PREFIX/secret/
+wget -c $GITHUB_URL/client/rsync.client.sh -P $PREFIX/client/
 
 chmod +x $PREFIX/init.d/rsyncd.sh
-cp -a $PREFIX/init.d/rsyncd.sh /etc/init.d/
 
+[ $SERVER_RELEASE -ne 7 ] && cp -a $PREFIX/init.d/rsyncd.sh /etc/init.d/
+
+# 显示用法
 /etc/init.d/rsyncd.sh
+$PREFIX/init.d/rsyncd.sh
