@@ -9,6 +9,8 @@
   # wget https://raw.githubusercontent.com/uyinn/bash-scripts/master/shell_scripts/shadowsocks/shadowsocks.install.sh 
   # sh shadowsocks.install.sh [ec2]
 
+# windows-client
+  # https://github.com/shadowsocks/shadowsocks-windows/releases
   
 ################
 
