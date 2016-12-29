@@ -1,0 +1,8 @@
+# install gogs paraments
+
+
+MYSQL_ROOT_PWD='Gogs@@mysql57'
+MYSQL_GOGS_PWD='Gogs@@mysql57'
+MYSQL_GOGS_USER=gogs
+MYSQL_GOGS_DBNAME=gogs
+
