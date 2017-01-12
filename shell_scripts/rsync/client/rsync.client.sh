@@ -10,7 +10,7 @@ LOCAL_PASS_FILE=/path/to/local/pass.word
 REMOTE_USER=user3
 REMOTE_HOST=127.0.0.1
 REMOTE_PORT=8888
-REMOTE_BUCKET=data3.client.scts
+REMOTE_BUCKET=data3
 
 # SHOW_PROGRESS='--progress'
 
