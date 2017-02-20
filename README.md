@@ -15,4 +15,5 @@ nginx服务器安装与配置文件
 
 + [rsync daemon 安装](./shell_scripts/rsync/)
 + [shadowssocks](./shell_scripts/shadowsocks/)
++ [pip_install](./shell_scripts/pip_install.sh)
  
