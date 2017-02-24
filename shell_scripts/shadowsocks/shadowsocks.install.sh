@@ -27,7 +27,7 @@
 
 # 获取配置文件
   # mkdir -p /etc/shadowsocks/
-  SHADOW_DIR=/usr/local/shadowscoks/
+  SHADOW_DIR=/usr/local/shadowscoks
   GTIHUB_URL=https://raw.githubusercontent.com/octowhale/bash-scripts/master/shell_scripts
   mkdir -p $SHADOW_DIR
   cd $_
@@ -54,8 +54,10 @@
   sed -i "s@SSSERVER_BIN@$(which ssserver)@" shadowsocksd.sh 
   sed -i "s@CONFIG_DIR@$SHADOW_DIR@" shadowsocksd.sh 
   
+  which dos2unix && dos2unix ./*
+  
   [ -f /etc/init.d/shadowsocksd.sh ] && mv /etc/init.d/shadowsocksd.sh{,.ori_$timestamp}
-  mv shadowsocksd.sh /etc/init.d/
+  cp shadowsocksd.sh /etc/init.d/
   
   
 echo "Usage: "
