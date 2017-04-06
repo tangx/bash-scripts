@@ -12,6 +12,7 @@ nginx服务器安装与配置文件
 + [dokuwiki语法转markdown](./tools/doku2markdown.sh)
 + [有道词典](./tools/youdaodict.sh)
 + [mysql_监控模板](./tools/mysql_monitor.sh)
++ [端口转发配置](./tools/iptables.forward.rule.lancher.sh)
 
 ## shell_scripts
 
