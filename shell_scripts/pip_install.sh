@@ -29,12 +29,13 @@ EOF
 }
 
 
-# if pip is not exist ,then install it
-which pip || __install_pip
-
-
 # set the default source mirror 
 case $country in 
 [cC][nN]) __ustc_mirrors ;;
 esac
+
+
+
+# if pip is not exist ,then install it
+which pip || __install_pip
 
