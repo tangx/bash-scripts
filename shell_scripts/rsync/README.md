@@ -1,5 +1,28 @@
 # rsync daemon 安装
 
+## 常用参数解释
+
+**command** : `rsync -arHlz src dest`
+
+**常用**
++ `-n, --dry-run` 仅测试哪些文件需要传输。
++ `-a, --archive`  归档模式; same as -rlptgoD (no -H)
++ `-r, --recursive`  递归模式
++ `-z, --compress`   传输时压缩文件
++ `--progress` 显示进度
+
+**删除**
++ `--remove-source-files` : 同步后删除源文件。 除非你明确知道在做神恶魔， 否则不要与 `--delete`。
++ `--delete` 删除目标机上本地没有的文件。
+
+**连接**
++ `-l, --links`: 将软连接复制成软连接。
++ `-L, --copy-links`: 使用目标文件替代软连接。
++ `-H, --hard-links` 保留硬连接
+
+**限速**
++ `--bwlimit=KBPS`: 限速 KBytes per second
+
 ## daemon
 
 支持 CentOS, Ubuntu
